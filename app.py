@@ -14,7 +14,15 @@ year = st.slider("Год", min_value=int(df['decade_built'].min()), max_value=in
 
 # Фильтрация мечетей по году существования
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
-filtered_df = df[mask]
+filtered_df = df[mask].copy()
+
+# Выбор мечети (по умолчанию ни одна не выбрана)
+selected_mosque = st.session_state.get("selected_mosque", None)
+
+# Добавляем столбец цвета точек
+filtered_df["color"] = filtered_df["mosque_name"].apply(
+    lambda name: [0, 0, 255, 200] if name == selected_mosque else [200, 30, 0, 160]
+)
 
 # Карта
 st.pydeck_chart(pdk.Deck(
@@ -30,28 +38,27 @@ st.pydeck_chart(pdk.Deck(
             'ScatterplotLayer',
             data=filtered_df,
             get_position='[longitude, latitude]',
-            get_color='[200, 30, 0, 160]',
-            get_radius=100,
+            get_color='color',
+            get_radius=150,
             pickable=True,
         ),
     ],
     tooltip={"text": "{mosque_name}"}
 ))
 
-# Выбор мечети по клику (эмуляция через selectbox)
-selected = st.selectbox(
-    "Выберите мечеть из списка, чтобы увидеть подробности:",
-    options=filtered_df['mosque_name'].tolist()
-)
+# Галерея карточек мечетей
+st.markdown("### Мечети в выбранный период:")
+columns = st.columns(3)
 
-mosque_info = filtered_df[filtered_df['mosque_name'] == selected].iloc[0]
-
-st.markdown(f"### {mosque_info['mosque_name']}")
-st.markdown(f"*{mosque_info['original_name']}*")
-st.markdown(f"**Годы:** {int(mosque_info['decade_built'])} - {int(mosque_info['decade_demolished']) if pd.notna(mosque_info['decade_demolished']) else 'настоящее время'}")
-
-if pd.notna(mosque_info['image_url']):
-    st.image(mosque_info['image_url'], use_column_width=True)
-
-if pd.notna(mosque_info['about']):
-    st.markdown(mosque_info['about'])
+for idx, row in enumerate(filtered_df.itertuples()):
+    col = columns[idx % 3]
+    with col:
+        if st.button(row.mosque_name, key=row.mosque_name):
+            st.session_state.selected_mosque = row.mosque_name
+            st.experimental_rerun()
+        if pd.notna(row.image_url):
+            st.image(row.image_url, use_column_width=True)
+        st.markdown(f"**{row.original_name}**")
+        st.markdown(f"{int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'настоящее время'}")
+        if row.mosque_name == selected_mosque:
+            st.markdown("<div style='border:2px solid red; padding:4px;'>Выбрано</div>", unsafe_allow_html=True)
