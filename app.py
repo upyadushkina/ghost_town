@@ -46,18 +46,26 @@ st.pydeck_chart(pdk.Deck(
     tooltip={"text": "{mosque_name}"}
 ))
 
-# Галерея карточек мечетей
+# Галерея карточек мечетей в виде кликабельных блоков
 st.markdown("### Мечети в выбранный период:")
 columns = st.columns(3)
 
 for idx, row in enumerate(filtered_df.itertuples()):
     col = columns[idx % 3]
+    is_selected = row.mosque_name == selected_mosque
+    card_style = "border: 3px solid red; padding: 10px; margin-bottom: 10px;" if is_selected else "padding: 10px; margin-bottom: 10px;"
+
     with col:
-        if st.button(row.mosque_name, key=row.mosque_name):
+        mosque_block = f"""
+        <div style='{card_style} cursor: pointer;' onclick="window.location.href='?selected={row.mosque_name}'">
+            <h4>{row.mosque_name}</h4>
+            {'<img src="' + row.image_url + '" width="100%">' if pd.notna(row.image_url) else ''}
+            <p><b>{row.original_name}</b><br>
+            {int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'настоящее время'}</p>
+        </div>
+        """
+        st.markdown(mosque_block, unsafe_allow_html=True)
+
+        # Альтернатива обработке клика через параметр запроса
+        if f"selected={row.mosque_name}" in st.experimental_get_query_params().get("selected", []):
             st.session_state.selected_mosque = row.mosque_name
-        if pd.notna(row.image_url):
-            st.image(row.image_url, use_column_width=True)
-        st.markdown(f"**{row.original_name}**")
-        st.markdown(f"{int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'настоящее время'}")
-        if row.mosque_name == selected_mosque:
-            st.markdown("<div style='border:2px solid red; padding:4px;'>Выбрано</div>", unsafe_allow_html=True)
