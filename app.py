@@ -7,7 +7,7 @@ df = pd.read_csv("cleaned_mosques.csv")
 
 # Заголовок
 st.title("Мечети Белграда: Историческая карта")
-st.markdown("Выберите год ниже, чтобы увидеть мечети, существовавшие в это время.")
+st.markdown("Выберите год ниже, чтобы увидеть мечети, существовавшиеся в это время.")
 
 # Ползунок времени
 year = st.slider("Год", min_value=int(df['decade_built'].min()), max_value=int(df['decade_demolished'].max()), value=1700, step=10)
@@ -46,18 +46,42 @@ st.pydeck_chart(pdk.Deck(
     tooltip={"text": "{mosque_name}"}
 ))
 
-# Галерея карточек мечетей в виде кликабельных блоков
+# Галерея карточек мечетей с hover-эффектом и тенью
+st.markdown("""
+    <style>
+    .card {
+        padding: 10px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        transition: 0.3s ease-in-out;
+        background-color: white;
+    }
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        cursor: pointer;
+    }
+    .selected {
+        border: 3px solid red;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 st.markdown("### Мечети в выбранный период:")
 columns = st.columns(3)
 
 for idx, row in enumerate(filtered_df.itertuples()):
     col = columns[idx % 3]
     is_selected = row.mosque_name == selected_mosque
-    card_style = "border: 3px solid red; padding: 10px; margin-bottom: 10px;" if is_selected else "padding: 10px; margin-bottom: 10px;"
+    css_class = "card selected" if is_selected else "card"
 
     with col:
+        if st.button(" ", key=f"select_{row.mosque_name}"):
+            st.session_state.selected_mosque = row.mosque_name
+
         mosque_block = f"""
-        <div style='{card_style} cursor: pointer;' onclick="window.location.href='?selected={row.mosque_name}'">
+        <div class='{css_class}'>
             <h4>{row.mosque_name}</h4>
             {'<img src="' + row.image_url + '" width="100%">' if pd.notna(row.image_url) else ''}
             <p><b>{row.original_name}</b><br>
@@ -65,7 +89,3 @@ for idx, row in enumerate(filtered_df.itertuples()):
         </div>
         """
         st.markdown(mosque_block, unsafe_allow_html=True)
-
-        # Альтернатива обработке клика через параметр запроса
-        if f"selected={row.mosque_name}" in st.experimental_get_query_params().get("selected", []):
-            st.session_state.selected_mosque = row.mosque_name
