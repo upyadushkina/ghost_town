@@ -24,13 +24,13 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
     lambda name: [0, 0, 255, 200] if name == selected_mosque else [200, 30, 0, 160]
 )
 
-# Карта
+# Карта с увеличенным зумом для Старого Белграда
 st.pydeck_chart(pdk.Deck(
     map_style='mapbox://styles/mapbox/light-v9',
     initial_view_state=pdk.ViewState(
-        latitude=44.82,
-        longitude=20.46,
-        zoom=12,
+        latitude=44.8185,
+        longitude=20.4605,
+        zoom=13.5,
         pitch=0,
     ),
     layers=[
@@ -55,7 +55,6 @@ for idx, row in enumerate(filtered_df.itertuples()):
     with col:
         if st.button(row.mosque_name, key=row.mosque_name):
             st.session_state.selected_mosque = row.mosque_name
-            st.experimental_rerun()
         if pd.notna(row.image_url):
             st.image(row.image_url, use_column_width=True)
         st.markdown(f"**{row.original_name}**")
