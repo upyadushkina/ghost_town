@@ -80,15 +80,15 @@ for idx, row in enumerate(filtered_df.itertuples()):
     css_class = "card selected" if is_selected else "card"
 
     with col:
-        if st.button("\u200b", key=f"select_{row.mosque_name}"):
-            st.session_state.selected_mosque = row.mosque_name
-
-        mosque_block = f"""
-        <div class='{css_class}'>
-            <h4>{row.mosque_name}</h4>
-            {'<img src="' + row.image_url + '" width="100%">' if pd.notna(row.image_url) else ''}
-            <p><b>{row.original_name}</b><br>
-            {int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'настоящее время'}</p>
-        </div>
-        """
-        st.markdown(mosque_block, unsafe_allow_html=True)
+        with st.form(key=f"form_{row.mosque_name}"):
+            mosque_block = f"""
+            <div class='{css_class}'>
+                <h4>{row.mosque_name}</h4>
+                {'<img src="' + row.image_url + '" width="100%">' if pd.notna(row.image_url) else ''}
+                <p><b>{row.original_name}</b><br>
+                {int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'настоящее время'}</p>
+            </div>
+            """
+            st.markdown(mosque_block, unsafe_allow_html=True)
+            if st.form_submit_button("double click", use_container_width=True):
+                st.session_state.selected_mosque = row.mosque_name
