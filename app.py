@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
-from keplergl import KeplerGl
-from streamlit_keplergl import keplergl_static
+import pydeck as pdk
 
 # Загружаем данные
 df = pd.read_csv("cleaned_mosques.csv")
 
 # Заголовок
-st.title("Мечети Белграда: Историческая карта (Kepler.gl)")
+st.title("Мечети Белграда: Историческая карта")
 st.markdown("Выберите год ниже, чтобы увидеть мечети, существовавшие в это время.")
 
 # Ползунок времени
@@ -15,47 +14,44 @@ year = st.slider("Год", min_value=int(df['decade_built'].min()), max_value=in
 
 # Фильтрация мечетей по году существования
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
-filtered_df = df[mask].copy()
+filtered_df = df[mask]
 
-# Добавляем нужные поля для отображения
-def format_popup(row):
-    img = f'<img src="{row["image_url"]}" width="200"><br>' if pd.notna(row['image_url']) else ''
-    about = row['about'] if pd.notna(row['about']) else ''
-    return f"""
-    <b>{row['mosque_name']}</b><br>
-    <i>{row['original_name']}</i><br>
-    <b>Годы:</b> {int(row['decade_built'])} - {int(row['decade_demolished']) if pd.notna(row['decade_demolished']) else 'настоящее время'}<br>
-    {img}
-    {about}
-    """
+# Карта
+st.pydeck_chart(pdk.Deck(
+    map_style='mapbox://styles/mapbox/light-v9',
+    initial_view_state=pdk.ViewState(
+        latitude=44.82,
+        longitude=20.46,
+        zoom=12,
+        pitch=0,
+    ),
+    layers=[
+        pdk.Layer(
+            'ScatterplotLayer',
+            data=filtered_df,
+            get_position='[longitude, latitude]',
+            get_color='[200, 30, 0, 160]',
+            get_radius=100,
+            pickable=True,
+        ),
+    ],
+    tooltip={"text": "{mosque_name}"}
+))
 
-filtered_df['popup'] = filtered_df.apply(format_popup, axis=1)
+# Выбор мечети по клику (эмуляция через selectbox)
+selected = st.selectbox(
+    "Выберите мечеть из списка, чтобы увидеть подробности:",
+    options=filtered_df['mosque_name'].tolist()
+)
 
-# Переименовываем в формат Kepler
-filtered_df.rename(columns={"longitude": "lng", "latitude": "lat"}, inplace=True)
+mosque_info = filtered_df[filtered_df['mosque_name'] == selected].iloc[0]
 
-# Создаём карту Kepler
-config = {
-    "version": "v1",
-    "config": {
-        "visState": {
-            "layers": [
-                {
-                    "type": "point",
-                    "config": {
-                        "dataId": "mosques",
-                        "label": "Mosques",
-                        "color": [30, 144, 255],
-                        "columns": {"lat": "lat", "lng": "lng", "altitude": None},
-                        "isVisible": True,
-                        "visConfig": {"radius": 15, "opacity": 0.8},
-                        "tooltip": ["popup"]
-                    },
-                }
-            ]
-        }
-    }
-}
+st.markdown(f"### {mosque_info['mosque_name']}")
+st.markdown(f"*{mosque_info['original_name']}*")
+st.markdown(f"**Годы:** {int(mosque_info['decade_built'])} - {int(mosque_info['decade_demolished']) if pd.notna(mosque_info['decade_demolished']) else 'настоящее время'}")
 
-map_1 = KeplerGl(height=600, data={"mosques": filtered_df}, config=config)
-keplergl_static(map_1)
+if pd.notna(mosque_info['image_url']):
+    st.image(mosque_info['image_url'], use_column_width=True)
+
+if pd.notna(mosque_info['about']):
+    st.markdown(mosque_info['about'])
