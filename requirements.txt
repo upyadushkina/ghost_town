@@ -1,6 +1,5 @@
 streamlit
 pandas
+pydeck
 folium
 streamlit-folium
-keplergl
-streamlit-keplergl
