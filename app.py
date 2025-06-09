@@ -19,36 +19,39 @@ df = pd.read_csv("cleaned_mosques.csv")
 st.markdown(f"""
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <style>
-    html, body, .main, .block-container, .stApp, [class*="css"]  {{
-        background-color: {PAGE_BG_COLOR} !important;
-        color: {PAGE_TEXT_COLOR} !important;
-        font-family: '{TEXT_FONT}', sans-serif !important;
-    }}
-    header, footer {{
-        background-color: {PAGE_BG_COLOR} !important;
-        color: {PAGE_TEXT_COLOR} !important;
-    }}
-    .css-18ni7ap, .css-1dp5vir, .css-1avcm0n {{
-        background-color: {PAGE_BG_COLOR} !important;
-    }}
-    .card {{
-        background-color: {CARD_COLOR};
-        color: {CARD_TEXT_COLOR};
-        padding: 10px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        transition: 0.3s ease-in-out;
-    }}
-    .card:hover {{
-        transform: scale(1.02);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        cursor: pointer;
-    }}
-    .selected {{
-        border: 3px solid {HIGHLIGHT_COLOR};
-    }}
-    </style>
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+html, body, .main, .block-container, .stApp, [class*="css"]  {
+    background-color: #262123 !important;
+    color: #E8DED3 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+header, footer {
+    background-color: #262123 !important;
+    color: #E8DED3 !important;
+}
+.css-18ni7ap, .css-1dp5vir, .css-1avcm0n {
+    background-color: #262123 !important;
+}
+.card {
+    background-color: #E8DED3;
+    color: #262123;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: 0.3s ease-in-out;
+    font-family: 'Inter', sans-serif !important;
+}
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+.selected {
+    border: 3px solid #6A50FF;
+}
+</style>
 """, unsafe_allow_html=True)
 
 # Заголовок
@@ -75,7 +78,7 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
 
 # Карта с темной темой и увеличенным зумом для Старого Белграда
 st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/dark-v10',
+    map_style='mapbox://styles/mapbox/navigation-night-v1',
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
