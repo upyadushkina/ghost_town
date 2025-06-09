@@ -96,15 +96,15 @@ st.pydeck_chart(pdk.Deck(
 ))
 
 # Галерея карточек мечетей
-cols = st.columns(4)
+cols = st.columns(3)
 for idx, row in filtered_df.iterrows():
-    i = idx % 4
+    i = idx % 3
     selected_class = "selected" if row.mosque_name == selected_mosque else ""
     html = f"""
     <div class='card {selected_class}' style='cursor:pointer; position: relative;' onclick="window.location.href='/?mosque={row.mosque_name}'">
         <img src='{row.image_url}' style='width:100%; border-radius:8px;'>
         <div class='tooltip'>{row.description}</div>
-        <div style='padding-top:5px;'><b>{row.original_name}</b></div>
+        <div style='padding-top:5px;'><b>{row.mosque_name}</b></div>
     </div>
     """
     cols[i].markdown(html, unsafe_allow_html=True)
