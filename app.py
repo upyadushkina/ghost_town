@@ -103,7 +103,7 @@ for idx, row in filtered_df.iterrows():
     html = f"""
     <div class='card {selected_class}' style='cursor:pointer; position: relative;' onclick="window.location.href='/?mosque={row.mosque_name}'">
         <div class='tooltip'>{row.description}</div>
-        <div style='padding-top:5px;'><b>{row.original_name}</b></div>
+        <div style='padding-top:5px;'><b>{row.mosque_name}</b></div>
     </div>
     """
     cols[i].markdown(html, unsafe_allow_html=True)
