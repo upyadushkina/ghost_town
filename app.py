@@ -43,7 +43,7 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
 
 # Карта с темной темой и увеличенным зумом для Старого Белграда
 st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/light-v10',
+    map_style='mapbox://styles/junully/cmbor3x3800ti01secmvvc2ih',
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
