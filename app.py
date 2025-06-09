@@ -20,8 +20,21 @@ TEXT_FONT = "Inter"
 with open("styles.html") as f:
     st.markdown(f.read(), unsafe_allow_html=True)
 
-# Загружаем данные
+# Загружаем данные мечетей (координаты и периоды)
 df = pd.read_csv("cleaned_mosques.csv")
+
+# Загружаем помесячную активность мечетей
+activity_df = pd.read_csv("Ghost Town. Belgrade Mosques - mosques_years.csv")
+
+# Сопоставление событий и прозрачности
+opacity_map = {
+    "Established": 1.0,
+    "Renovated": 1.0,
+    "Damaged": 0.7,
+    "Changed function": 0.5,
+    "Abandoned": 0.2,
+    "Demolished": 0.0,
+}
 
 # Заголовок
 st.title("Belgrade Mosques: Historical Map")
@@ -40,7 +53,22 @@ if "selected_mosque" not in st.session_state:
 
 selected_mosque = st.session_state.selected_mosque
 
-# Добавляем столбец цвета точек
+# Назначаем прозрачность на основе события в конкретный год
+filtered_df = pd.merge(
+    filtered_df,
+    activity_df[activity_df["decade"] == year][["mosque_name", "what_happend"]],
+    on="mosque_name",
+    how="left"
+)
+
+filtered_df["opacity"] = filtered_df["what_happend"].map(opacity_map).fillna(1.0)
+
+# Назначаем цвет с учётом прозрачности
+filtered_df["color"] = filtered_df.apply(
+    lambda row: SELECTED_POINT_COLOR if row.mosque_name == selected_mosque
+    else [DEFAULT_POINT_COLOR[0], DEFAULT_POINT_COLOR[1], DEFAULT_POINT_COLOR[2], int(row.opacity * 255)],
+    axis=1
+)
 filtered_df["color"] = filtered_df["mosque_name"].apply(
     lambda name: SELECTED_POINT_COLOR if name == selected_mosque else DEFAULT_POINT_COLOR
 )
