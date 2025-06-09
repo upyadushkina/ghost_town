@@ -15,13 +15,14 @@ TEXT_FONT = "Inter"
 # Загружаем данные
 df = pd.read_csv("cleaned_mosques.csv")
 
-# Стили страницы и сброс Streamlit тем
+# Подключаем шрифт Inter и сбрасываем стили Streamlit
 st.markdown(f"""
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <style>
-    html, body, [class*="css"]  {{
+    html, body, .main, .block-container, [class*="css"]  {{
         background-color: {PAGE_BG_COLOR} !important;
         color: {PAGE_TEXT_COLOR} !important;
-        font-family: '{TEXT_FONT}', sans-serif;
+        font-family: '{TEXT_FONT}', sans-serif !important;
     }}
     .card {{
         background-color: {CARD_COLOR};
