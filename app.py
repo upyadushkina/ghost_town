@@ -24,11 +24,11 @@ with open("styles.html") as f:
 df = pd.read_csv("cleaned_mosques.csv")
 
 # Заголовок
-st.title("Мечети Белграда: Историческая карта")
-st.markdown("Выберите год ниже, чтобы увидеть мечети, существовавшиеся в это время.")
+st.title("Belgrade Mosques: Historical Map")
+st.markdown("Select a year below to see which mosques existed at that time.")
 
 # Ползунок времени
-year = st.slider("Год", min_value=int(df['decade_built'].min()), max_value=int(df['decade_demolished'].max()), value=1700, step=10)
+year = st.slider("Year", min_value=int(df['decade_built'].min()), max_value=int(df['decade_demolished'].max()), value=1700, step=10)), max_value=int(df['decade_demolished'].max()), value=1700, step=10)
 
 # Фильтрация мечетей по году существования
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
@@ -51,7 +51,7 @@ st.pydeck_chart(pdk.Deck(
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
-        zoom=13.5,
+        zoom=14,
         pitch=0,
     ),
     layers=[
@@ -66,7 +66,7 @@ st.pydeck_chart(pdk.Deck(
     ],
     tooltip={
         "html": """
-        <div style='font-family: Inter; background-color: #ECEEED; color: #343332; padding: 5px; font-size: 10px;'>
+        <div style='font-family: Inter; background-color: #ECEEED; color: #343332; padding: 5px; font-size: 8px; max-width: 150px;'>
             <b>{mosque_name}</b>
         </div>
         """,
@@ -79,7 +79,7 @@ st.pydeck_chart(pdk.Deck(
     }
 ))
 
-st.markdown("### Мечети в выбранный период:")
+st.markdown("### Mosques in the selected period:")
 columns = st.columns(3)
 
 for idx, row in enumerate(filtered_df.itertuples()):
@@ -93,8 +93,7 @@ for idx, row in enumerate(filtered_df.itertuples()):
             <div class='{css_class}'>
                 <h4>{row.mosque_name}</h4>
                 {'<img src="' + row.image_url + '" width="100%">' if pd.notna(row.image_url) else ''}
-                <p><b>{row.original_name}</b><br>
-                {int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'настоящее время'}</p>
+                <p><b>{row.original_name}</b><br>{int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'present'}</p>
             </div>
             """
             st.markdown(mosque_block, unsafe_allow_html=True)
