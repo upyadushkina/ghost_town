@@ -21,7 +21,7 @@ with open("styles.html") as f:
     st.markdown(f.read(), unsafe_allow_html=True)
 
 # Загружаем данные мечетей (координаты и периоды)
-df = pd.read_csv("cleaned_mosques.csv")
+df = pd.read_csv("mosque_about.csv")
 activity_df = pd.read_csv("Ghost Town. Belgrade Mosques - mosques_years.csv")
 
 opacity_map = {
@@ -101,7 +101,7 @@ for idx, row in filtered_df.iterrows():
     i = idx % 4
     selected_class = "selected" if row.mosque_name == selected_mosque else ""
     html = f"""
-    <div class='card {selected_class}' style='cursor:pointer' onclick="window.location.href='/?mosque={row.mosque_name}'">
+    <div class='card {selected_class}' style='cursor:pointer' title="{row.description}" onclick="window.location.href='/?mosque={row.mosque_name}'">
         <img src='{row.image_url}' style='width:100%; border-radius:8px;'>
         <div style='padding-top:5px;'><b>{row.original_name}</b></div>
     </div>
