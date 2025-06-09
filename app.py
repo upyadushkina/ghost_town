@@ -42,7 +42,7 @@ st.image("heading.png", use_container_width=True)
 # st.markdown("Select a year below to see which mosques existed at that time.")
 
 # Ползунок времени
-year = st.slider("", min_value=int(df['decade_built'].min()), max_value=2025), value=1700, step=10)
+year = st.slider("", min_value=int(df['decade_built'].min()), max_value=2025, value=1700, step=10)
 
 # Фильтрация мечетей по году существования
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
