@@ -90,3 +90,34 @@ input[type=range]::-ms-thumb {
     border: 3px solid #FF649A;
 }
 </style>
+
+<style>
+.card {
+    position: relative;
+}
+
+.card .tooltip {
+    visibility: hidden;
+    background-color: #FFFFFF;
+    color: #191A1A;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    font-size: 12px;
+    width: 200px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+</style>
+
