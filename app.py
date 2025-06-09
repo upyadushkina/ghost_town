@@ -12,51 +12,12 @@ DEFAULT_POINT_COLOR = [244, 192, 124, 200]  # #F4C07C
 SELECTED_POINT_COLOR = [106, 80, 255, 200]  # #6A50FF
 TEXT_FONT = "Inter"
 
+# Загружаем стили из внешнего файла
+with open("styles.html") as f:
+    st.markdown(f.read(), unsafe_allow_html=True)
+
 # Загружаем данные
 df = pd.read_csv("cleaned_mosques.csv")
-
-# Подключаем шрифт Inter и сбрасываем стили Streamlit
-st.markdown("""
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <style>
-    html, body, .main, .block-container, .stApp, [class*="css"]  {
-        background-color: {bg} !important;
-        color: {text} !important;
-        font-family: 'Inter', sans-serif !important;
-    }
-    header, footer {
-        background-color: {bg} !important;
-        color: {text} !important;
-    }
-    .css-18ni7ap, .css-1dp5vir, .css-1avcm0n {
-        background-color: {bg} !important;
-    }
-    .card {
-        background-color: {card_bg};
-        color: {card_text};
-        padding: 10px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        transition: 0.3s ease-in-out;
-        font-family: 'Inter', sans-serif !important;
-    }
-    .card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        cursor: pointer;
-    }
-    .selected {
-        border: 3px solid {highlight};
-    }
-    </style>
-""".format(
-    bg=PAGE_BG_COLOR,
-    text=PAGE_TEXT_COLOR,
-    card_bg=CARD_COLOR,
-    card_text=CARD_TEXT_COLOR,
-    highlight=HIGHLIGHT_COLOR
-), unsafe_allow_html=True)
 
 # Заголовок
 st.title("Мечети Белграда: Историческая карта")
