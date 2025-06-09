@@ -37,7 +37,8 @@ opacity_map = {
 }
 
 # Заголовок
-st.title("Belgrade Mosques: Historical Map")
+# st.title("Belgrade Mosques: Historical Map")
+st.image("heading.png", use_column_width=True)
 st.markdown("Select a year below to see which mosques existed at that time.")
 
 # Ползунок времени
