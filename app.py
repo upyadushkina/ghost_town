@@ -95,14 +95,14 @@ st.pydeck_chart(pdk.Deck(
         "html": """
         <div style='font-family: Inter; background-color: #ECEEED; color: #343332; padding: 5px; font-size: 8px; max-width: 150px;'>
             <b>{mosque_name}</b><br>
-            <i>{what_happend}</i>
+            <span>{what_happend}</span>
         </div>
         """,
         "style": {
             "backgroundColor": "#ECEEED",
             "color": "#343332",
             "fontFamily": "Inter",
-            "fontSize": "8px"
+            "fontSize": "12px"
         }    
     }
 ))
