@@ -4,7 +4,7 @@ import pydeck as pdk
 import os
 
 # Устанавливаем Mapbox Access Token
-os.environ["MAPBOX_ACCESS_TOKEN"] = "pk.eyJ1IjoianVudWxseSIsImEiOiJjbHJnNnNvYzkwMzI3MnZxdmE3dXhzcjZoIn0.yQa3m4Nd0IPLeJJBsxfpww"
+os.environ["MAPBOX_ACCESS_TOKEN"] = "вставь_сюда_свой_mapbox_token"
 
 # === Цветовая схема и параметры ===
 PAGE_BG_COLOR = "#262123"
@@ -47,7 +47,7 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
 
 # Карта с темной темой и увеличенным зумом для Старого Белграда
 st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/junully/cmbor3x3800ti01secmvvc2ih',
+    map_style='mapbox://styles/mapbox/light-v10',
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
