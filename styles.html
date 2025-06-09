@@ -1,14 +1,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
 <style>
-/* Подключаем шрифт Inter */
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+/* Подключаем локальный шрифт Templegarten */
+@font-face {
+    font-family: 'Templegarten';
+    src: url('Templegarten.woff') format('woff'),
+         url('Templegarten.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* Полный сброс оформления Streamlit */
 html, body, .main, .block-container, .stApp, [class*="css"] {
     background-color: #CAD2D3 !important;
     color: #343332 !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Templegarten', sans-serif !important;
     box-shadow: none !important;
     border: none !important;
 }
@@ -28,7 +34,7 @@ button[type="submit"] {
     background-color: #FF649A !important;
     border: none !important;
     color: white !important;
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Templegarten', sans-serif !important;
     box-shadow: none !important;
     transition: none !important;
 }
@@ -61,4 +67,3 @@ input[type=range]::-ms-thumb {
     background-color: #CAD2D3 !important;
 }
 </style>
-
