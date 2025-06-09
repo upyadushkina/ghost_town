@@ -15,12 +15,12 @@ TEXT_FONT = "Inter"
 # Загружаем данные
 df = pd.read_csv("cleaned_mosques.csv")
 
-# Стили страницы
+# Стили страницы и сброс Streamlit тем
 st.markdown(f"""
     <style>
-    body {{
-        background-color: {PAGE_BG_COLOR};
-        color: {PAGE_TEXT_COLOR};
+    html, body, [class*="css"]  {{
+        background-color: {PAGE_BG_COLOR} !important;
+        color: {PAGE_TEXT_COLOR} !important;
         font-family: '{TEXT_FONT}', sans-serif;
     }}
     .card {{
@@ -65,9 +65,9 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
     lambda name: SELECTED_POINT_COLOR if name == selected_mosque else DEFAULT_POINT_COLOR
 )
 
-# Карта с увеличенным зумом для Старого Белграда
+# Карта с темной темой и увеличенным зумом для Старого Белграда
 st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/light-v9',  # кастомную тему сложно задать, но фон заменим ниже
+    map_style='mapbox://styles/mapbox/dark-v10',
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
