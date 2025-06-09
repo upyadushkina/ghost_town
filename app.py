@@ -47,7 +47,7 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
 
 # Карта с уменьшенными точками и кастомным tooltip
 st.pydeck_chart(pdk.Deck(
-    map_style=''mapbox://styles/mapbox/satellite-streets-v12'',
+    map_style='mapbox://styles/mapbox/satellite-streets-v12',
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
