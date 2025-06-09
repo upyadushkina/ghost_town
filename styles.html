@@ -1,11 +1,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
 <style>
-/* Подключаем шрифт Templegarten */
+/* Подключаем локальный шрифт Inter */
 @font-face {
-    font-family: 'Templegarten';
-    src: url('Templegarten.woff') format('woff'),
-         url('Templegarten.otf') format('opentype');
+    font-family: 'Inter';
+    src: url('Inter.woff') format('woff'),
+         url('Inter.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
@@ -19,9 +19,10 @@ html, body, .main, .block-container, .stApp, [class*="css"] {
     border: none !important;
 }
 
-header, footer {
-    background-color: #CAD2D3 !important;
-    color: #343332 !important;
+header, footer, .st-emotion-cache-18ni7ap {
+    background-color: #191A1A !important;
+    color: #FFFFFF !important;
+    border-bottom: none !important;
 }
 
 /* Курсор при наведении на карту */
@@ -29,11 +30,11 @@ canvas:hover {
     cursor: pointer !important;
 }
 
-/* Кнопка "double click" — полностью кастомная */
+/* Кнопка "double click" — цвет текста и фона */
 button[type="submit"] {
     background-color: #FF649A !important;
     border: none !important;
-    color: white !important;
+    color: #191A1A !important;
     font-family: 'Inter', sans-serif !important;
     box-shadow: none !important;
     transition: none !important;
@@ -44,7 +45,7 @@ button[type="submit"]:focus,
 button[type="submit"]:active {
     background-color: #FF649A !important;
     border: none !important;
-    color: white !important;
+    color: #191A1A !important;
     box-shadow: none !important;
     outline: none !important;
 }
@@ -53,11 +54,9 @@ button[type="submit"]:active {
 input[type=range]::-webkit-slider-thumb {
     background: #FF649A !important;
 }
-
 input[type=range]::-moz-range-thumb {
     background: #FF649A !important;
 }
-
 input[type=range]::-ms-thumb {
     background: #FF649A !important;
 }
@@ -66,14 +65,23 @@ input[type=range]::-ms-thumb {
 .css-18ni7ap, .css-1dp5vir, .css-1avcm0n {
     background-color: #191A1A !important;
 }
-</style>
 
-<style>
-/* Перекраска хедера Streamlit в цвет фона */
-header, .st-emotion-cache-18ni7ap {
-    background-color: #191A1A !important;
-    color: #FFFFFF !important;
-    border-bottom: none !important;
+/* Карточки мечетей */
+.card {
+    background-color: #FFFFFF !important;
+    color: #191A1A !important;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(255, 100, 154, 0.3);
+}
+
+.card.selected {
+    border: 3px solid #FF649A;
 }
 </style>
-
