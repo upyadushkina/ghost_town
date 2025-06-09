@@ -7,13 +7,13 @@ import os
 os.environ["MAPBOX_ACCESS_TOKEN"] = "вставь_сюда_свой_mapbox_token"
 
 # === Цветовая схема и параметры ===
-PAGE_BG_COLOR = "#CAD2D3"
-PAGE_TEXT_COLOR = "#343332"
+PAGE_BG_COLOR = "#191A1A"
+PAGE_TEXT_COLOR = "#FFFFFF"
 HIGHLIGHT_COLOR = "#FF649A"
 CARD_COLOR = "#FFFFFF"
-CARD_TEXT_COLOR = "#343332"
-DEFAULT_POINT_COLOR = [255, 177, 100, 200]  # #FFB164
-SELECTED_POINT_COLOR = [255, 100, 154, 200]  # #FF649A
+CARD_TEXT_COLOR = "#191A1A"
+DEFAULT_POINT_COLOR = [25, 26, 26, 200]  # #191A1A
+SELECTED_POINT_COLOR = [255, 75, 75, 200]  # #FF4B4B
 TEXT_FONT = "Inter"
 
 # Загружаем стили из внешнего файла
@@ -47,7 +47,7 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
 
 # Карта с уменьшенными точками и кастомным tooltip
 st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/streets-v12',
+    map_style='mapbox://styles/mapbox/light-v10',
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
@@ -60,7 +60,7 @@ st.pydeck_chart(pdk.Deck(
             data=filtered_df,
             get_position='[longitude, latitude]',
             get_color='color',
-            get_radius=50,  # уменьшено в 3 раза
+            get_radius=50,
             pickable=True,
         ),
     ],
