@@ -41,7 +41,7 @@ st.title("Belgrade Mosques: Historical Map")
 st.markdown("Select a year below to see which mosques existed at that time.")
 
 # Ползунок времени
-year = st.slider("Year", min_value=int(df['decade_built'].min()), max_value=int(df['decade_demolished'].max()), value=1700, step=10)
+year = st.slider("Year", min_value=int(df['decade_built'].min()), max_value=int(df['decade_demolished'].max()), value=1700, step=10)), max_value=int(df['decade_demolished'].max()), value=1700, step=10)), max_value=int(df['decade_demolished'].max()), value=1700, step=10)), max_value=int(df['decade_demolished'].max()), value=1700, step=10)
 
 # Фильтрация мечетей по году существования
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
@@ -69,9 +69,7 @@ filtered_df["color"] = filtered_df.apply(
     else [DEFAULT_POINT_COLOR[0], DEFAULT_POINT_COLOR[1], DEFAULT_POINT_COLOR[2], int(row.opacity * 255)],
     axis=1
 )
-filtered_df["color"] = filtered_df["mosque_name"].apply(
-    lambda name: SELECTED_POINT_COLOR if name == selected_mosque else DEFAULT_POINT_COLOR
-)
+
 
 # Карта с уменьшенными точками и кастомным tooltip
 st.pydeck_chart(pdk.Deck(
