@@ -24,8 +24,6 @@ with open("styles.html") as f:
 df = pd.read_csv("mosque_about.csv")
 activity_df = pd.read_csv("Ghost Town. Belgrade Mosques - mosques_years.csv")
 
-df[["longitude", "latitude"]] = df["location"].str.extract(r"\(?([0-9.\-]+),\s*([0-9.\-]+)\)?").astype(float)
-
 opacity_map = {
     "Established": 1.0,
     "Renovated": 1.0,
