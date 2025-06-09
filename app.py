@@ -9,11 +9,11 @@ os.environ["MAPBOX_ACCESS_TOKEN"] = "вставь_сюда_свой_mapbox_token
 # === Цветовая схема и параметры ===
 PAGE_BG_COLOR = "#CAD2D3"
 PAGE_TEXT_COLOR = "#343332"
-HIGHLIGHT_COLOR = "#6A50FF"
+HIGHLIGHT_COLOR = "#FF649A"
 CARD_COLOR = "#FFFFFF"
 CARD_TEXT_COLOR = "#343332"
-DEFAULT_POINT_COLOR = "#FFB164"
-SELECTED_POINT_COLOR = "#FF649A"
+DEFAULT_POINT_COLOR = [255, 177, 100, 200]  # #FFB164
+SELECTED_POINT_COLOR = [255, 100, 154, 200]  # #FF649A
 TEXT_FONT = "Inter"
 
 # Загружаем стили из внешнего файла
@@ -45,7 +45,7 @@ filtered_df["color"] = filtered_df["mosque_name"].apply(
     lambda name: SELECTED_POINT_COLOR if name == selected_mosque else DEFAULT_POINT_COLOR
 )
 
-# Карта с темной темой и увеличенным зумом для Старого Белграда
+# Карта с уменьшенными точками и кастомным tooltip
 st.pydeck_chart(pdk.Deck(
     map_style='mapbox://styles/mapbox/light-v10',
     initial_view_state=pdk.ViewState(
@@ -60,11 +60,23 @@ st.pydeck_chart(pdk.Deck(
             data=filtered_df,
             get_position='[longitude, latitude]',
             get_color='color',
-            get_radius=150,
+            get_radius=50,  # уменьшено в 3 раза
             pickable=True,
         ),
     ],
-    tooltip={"text": "{mosque_name}"}
+    tooltip={
+        "html": """
+        <div style='font-family: Inter; background-color: #ECEEED; color: #343332; padding: 5px; font-size: 10px;'>
+            <b>{mosque_name}</b>
+        </div>
+        """,
+        "style": {
+            "backgroundColor": "#ECEEED",
+            "color": "#343332",
+            "fontFamily": "Inter",
+            "fontSize": "10px"
+        }
+    }
 ))
 
 st.markdown("### Мечети в выбранный период:")
