@@ -101,8 +101,8 @@ for idx, row in filtered_df.iterrows():
     i = idx % 4
     selected_class = "selected" if row.mosque_name == selected_mosque else ""
     html = f"""
-    <div class='card {selected_class}' style='cursor:pointer' title="{row.description}" onclick="window.location.href='/?mosque={row.mosque_name}'">
-        <img src='{row.image_url}' style='width:100%; border-radius:8px;'>
+    <div class='card {selected_class}' style='cursor:pointer; position: relative;' onclick="window.location.href='/?mosque={row.mosque_name}'">
+        <div class='tooltip'>{row.description}</div>
         <div style='padding-top:5px;'><b>{row.original_name}</b></div>
     </div>
     """
