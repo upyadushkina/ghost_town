@@ -34,7 +34,7 @@ opacity_map = {
 }
 
 st.image("heading.png", use_container_width=True)
-year = st.slider("", min_value=int(df['decade_built'].min()), max_value=2025, value=1700, step=10)
+year = st.slider("", min_value=int(df['decade_built'].min()), max_value=int(df['decade_demolished'].max()), value=1700, step=10)
 
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
 filtered_df = df[mask].copy()
