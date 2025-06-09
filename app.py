@@ -94,15 +94,16 @@ st.pydeck_chart(pdk.Deck(
     tooltip={
         "html": """
         <div style='font-family: Inter; background-color: #ECEEED; color: #343332; padding: 5px; font-size: 8px; max-width: 150px;'>
-            <b>{mosque_name}</b>
+            <b>{mosque_name}</b><br>
+            <i>{what_happend}</i>
         </div>
         """,
         "style": {
             "backgroundColor": "#ECEEED",
             "color": "#343332",
             "fontFamily": "Inter",
-            "fontSize": "10px"
-        }
+            "fontSize": "8px"
+        }    
     }
 ))
 
