@@ -95,6 +95,8 @@ st.pydeck_chart(pdk.Deck(
     }
 ))
 
+st.image("text_block2.png", use_container_width=True)
+
 # Галерея карточек мечетей
 cols = st.columns(3)
 for idx, row in filtered_df.iterrows():
