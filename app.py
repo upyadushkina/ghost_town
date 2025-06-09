@@ -19,7 +19,6 @@ df = pd.read_csv("cleaned_mosques.csv")
 st.markdown(f"""
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 html, body, .main, .block-container, .stApp, [class*="css"]  {
     background-color: #262123 !important;
