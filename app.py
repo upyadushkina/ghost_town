@@ -22,7 +22,7 @@ with open("styles.html") as f:
 
 # Загружаем данные мечетей (координаты и периоды)
 df = pd.read_csv("mosque_about.csv")
-activity_df = pd.read_csv("Ghost Town. Belgrade Mosques - mosques_years.csv")
+activity_df = pd.read_csv("mosques_years.csv")
 
 opacity_map = {
     "Established": 1.0,
