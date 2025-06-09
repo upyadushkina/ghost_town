@@ -7,13 +7,13 @@ import os
 os.environ["MAPBOX_ACCESS_TOKEN"] = "вставь_сюда_свой_mapbox_token"
 
 # === Цветовая схема и параметры ===
-PAGE_BG_COLOR = "#ECEEED"
+PAGE_BG_COLOR = "#CAD2D3"
 PAGE_TEXT_COLOR = "#343332"
 HIGHLIGHT_COLOR = "#6A50FF"
-CARD_COLOR = "#F6F6F4"
+CARD_COLOR = "#FFFFFF"
 CARD_TEXT_COLOR = "#343332"
-DEFAULT_POINT_COLOR = [244, 192, 124, 200]  # #F4C07C
-SELECTED_POINT_COLOR = [106, 80, 255, 200]  # #6A50FF
+DEFAULT_POINT_COLOR = "#FFB164"
+SELECTED_POINT_COLOR = "#FF649A"
 TEXT_FONT = "Inter"
 
 # Загружаем стили из внешнего файла
