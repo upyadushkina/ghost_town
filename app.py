@@ -71,6 +71,7 @@ filtered_df["color"] = filtered_df.apply(
     axis=1
 )
 
+filtered_df["what_happend"] = filtered_df["what_happend"].fillna("")
 
 # Карта с уменьшенными точками и кастомным tooltip
 st.pydeck_chart(pdk.Deck(
