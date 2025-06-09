@@ -19,10 +19,17 @@ df = pd.read_csv("cleaned_mosques.csv")
 st.markdown(f"""
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <style>
-    html, body, .main, .block-container, [class*="css"]  {{
+    html, body, .main, .block-container, .stApp, [class*="css"]  {{
         background-color: {PAGE_BG_COLOR} !important;
         color: {PAGE_TEXT_COLOR} !important;
         font-family: '{TEXT_FONT}', sans-serif !important;
+    }}
+    header, footer {{
+        background-color: {PAGE_BG_COLOR} !important;
+        color: {PAGE_TEXT_COLOR} !important;
+    }}
+    .css-18ni7ap, .css-1dp5vir, .css-1avcm0n {{
+        background-color: {PAGE_BG_COLOR} !important;
     }}
     .card {{
         background-color: {CARD_COLOR};
