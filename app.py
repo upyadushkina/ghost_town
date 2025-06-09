@@ -22,11 +22,8 @@ with open("styles.html") as f:
 
 # Загружаем данные мечетей (координаты и периоды)
 df = pd.read_csv("cleaned_mosques.csv")
-
-# Загружаем помесячную активность мечетей
 activity_df = pd.read_csv("Ghost Town. Belgrade Mosques - mosques_years.csv")
 
-# Сопоставление событий и прозрачности
 opacity_map = {
     "Established": 1.0,
     "Renovated": 1.0,
@@ -36,25 +33,17 @@ opacity_map = {
     "Demolished": 0.0,
 }
 
-# Заголовок
-# st.title("Belgrade Mosques: Historical Map")
 st.image("heading.png", use_container_width=True)
-# st.markdown("Select a year below to see which mosques existed at that time.")
-
-# Ползунок времени
 year = st.slider("", min_value=int(df['decade_built'].min()), max_value=2025, value=1700, step=10)
 
-# Фильтрация мечетей по году существования
 mask = (df['decade_built'] <= year) & ((df['decade_demolished'].isna()) | (df['decade_demolished'] >= year))
 filtered_df = df[mask].copy()
 
-# Выбор мечети (по умолчанию ни одна не выбрана)
 if "selected_mosque" not in st.session_state:
     st.session_state.selected_mosque = None
 
 selected_mosque = st.session_state.selected_mosque
 
-# Назначаем прозрачность на основе события в конкретный год
 filtered_df = pd.merge(
     filtered_df,
     activity_df[activity_df["decade"] == year][["mosque_name", "what_happend"]],
@@ -64,7 +53,6 @@ filtered_df = pd.merge(
 
 filtered_df["opacity"] = filtered_df["what_happend"].map(opacity_map).fillna(1.0)
 
-# Назначаем цвет с учётом прозрачности
 filtered_df["color"] = filtered_df.apply(
     lambda row: SELECTED_POINT_COLOR if row.mosque_name == selected_mosque
     else [DEFAULT_POINT_COLOR[0], DEFAULT_POINT_COLOR[1], DEFAULT_POINT_COLOR[2], int(row.opacity * 255)],
@@ -73,7 +61,6 @@ filtered_df["color"] = filtered_df.apply(
 
 filtered_df["what_happend"] = filtered_df["what_happend"].fillna("")
 
-# Карта с уменьшенными точками и кастомным tooltip
 st.pydeck_chart(pdk.Deck(
     map_style='mapbox://styles/mapbox/light-v10',
     initial_view_state=pdk.ViewState(
@@ -104,27 +91,24 @@ st.pydeck_chart(pdk.Deck(
             "color": "#FFFFFF",
             "fontFamily": "Inter",
             "fontSize": "12px"
-        }    
+        }
     }
 ))
 
-st.markdown("### Mosques in the selected period:")
-columns = st.columns(3)
+# Галерея карточек мечетей
+cols = st.columns(4)
+for idx, row in filtered_df.iterrows():
+    i = idx % 4
+    selected_class = "selected" if row.mosque_name == selected_mosque else ""
+    html = f"""
+    <div class='card {selected_class}' style='cursor:pointer' onclick="window.location.href='/?mosque={row.mosque_name}'">
+        <img src='{row.image_url}' style='width:100%; border-radius:8px;'>
+        <div style='padding-top:5px;'><b>{row.original_name}</b></div>
+    </div>
+    """
+    cols[i].markdown(html, unsafe_allow_html=True)
 
-for idx, row in enumerate(filtered_df.itertuples()):
-    col = columns[idx % 3]
-    is_selected = row.mosque_name == selected_mosque
-    css_class = "card selected" if is_selected else "card"
-
-    with col:
-        with st.form(key=f"form_{row.mosque_name}"):
-            mosque_block = f"""
-            <div class='{css_class}'>
-                <h4>{row.mosque_name}</h4>
-                {'<img src="' + row.image_url + '" width="100%">' if pd.notna(row.image_url) else ''}
-                <p><b>{row.original_name}</b><br>{int(row.decade_built)} - {int(row.decade_demolished) if pd.notna(row.decade_demolished) else 'present'}</p>
-            </div>
-            """
-            st.markdown(mosque_block, unsafe_allow_html=True)
-            if st.form_submit_button("double click", use_container_width=True):
-                st.session_state.selected_mosque = row.mosque_name
+# Обработка клика по ссылке (грубо, на перезапуск страницы)
+m_query = st.query_params.get("mosque")
+if m_query:
+    st.session_state.selected_mosque = m_query
