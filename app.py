@@ -2,8 +2,46 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 
+# === Цветовая схема и параметры ===
+PAGE_BG_COLOR = "#262123"
+PAGE_TEXT_COLOR = "#E8DED3"
+HIGHLIGHT_COLOR = "#6A50FF"
+CARD_COLOR = "#E8DED3"
+CARD_TEXT_COLOR = "#262123"
+DEFAULT_POINT_COLOR = [244, 192, 124, 200]  # #F4C07C
+SELECTED_POINT_COLOR = [106, 80, 255, 200]  # #6A50FF
+TEXT_FONT = "Inter"
+
 # Загружаем данные
 df = pd.read_csv("cleaned_mosques.csv")
+
+# Стили страницы
+st.markdown(f"""
+    <style>
+    body {{
+        background-color: {PAGE_BG_COLOR};
+        color: {PAGE_TEXT_COLOR};
+        font-family: '{TEXT_FONT}', sans-serif;
+    }}
+    .card {{
+        background-color: {CARD_COLOR};
+        color: {CARD_TEXT_COLOR};
+        padding: 10px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        transition: 0.3s ease-in-out;
+    }}
+    .card:hover {{
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        cursor: pointer;
+    }}
+    .selected {{
+        border: 3px solid {HIGHLIGHT_COLOR};
+    }}
+    </style>
+""", unsafe_allow_html=True)
 
 # Заголовок
 st.title("Мечети Белграда: Историческая карта")
@@ -24,12 +62,12 @@ selected_mosque = st.session_state.selected_mosque
 
 # Добавляем столбец цвета точек
 filtered_df["color"] = filtered_df["mosque_name"].apply(
-    lambda name: [0, 0, 255, 200] if name == selected_mosque else [200, 30, 0, 160]
+    lambda name: SELECTED_POINT_COLOR if name == selected_mosque else DEFAULT_POINT_COLOR
 )
 
 # Карта с увеличенным зумом для Старого Белграда
 st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/light-v9',
+    map_style='mapbox://styles/mapbox/light-v9',  # кастомную тему сложно задать, но фон заменим ниже
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
@@ -48,28 +86,6 @@ st.pydeck_chart(pdk.Deck(
     ],
     tooltip={"text": "{mosque_name}"}
 ))
-
-# Галерея карточек мечетей с hover-эффектом и тенью
-st.markdown("""
-    <style>
-    .card {
-        padding: 10px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        transition: 0.3s ease-in-out;
-        background-color: white;
-    }
-    .card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        cursor: pointer;
-    }
-    .selected {
-        border: 3px solid red;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 st.markdown("### Мечети в выбранный период:")
 columns = st.columns(3)
