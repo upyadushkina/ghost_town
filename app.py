@@ -78,7 +78,6 @@ st.pydeck_chart(pdk.Deck(
             get_color='color',
             get_radius=50,
             pickable=True,
-            st.write("Количество точек на карте:", len(filtered_df)),
         ),
     ],
     tooltip={
@@ -97,6 +96,7 @@ st.pydeck_chart(pdk.Deck(
     }
 ))
 
+st.write("Количество точек на карте:", len(filtered_df)),
 st.image("text_block2.png", use_container_width=True)
 
 # Галерея карточек мечетей
