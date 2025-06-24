@@ -117,3 +117,27 @@ for idx, row in filtered_df.iterrows():
 m_query = st.query_params.get("mosque")
 if m_query:
     st.session_state.selected_mosque = m_query
+
+
+st.write("🔍 Тест: карта работает или нет?")
+test_df = pd.DataFrame({'lat': [44.8185], 'lon': [20.4605]})
+
+st.pydeck_chart(pdk.Deck(
+    map_style='mapbox://styles/mapbox/light-v10',
+    api_keys={"mapbox": "pk.eyJ1Ijoi...вставь_сюда_твой_токен"},
+    initial_view_state=pdk.ViewState(
+        latitude=44.8185,
+        longitude=20.4605,
+        zoom=13.5,
+    ),
+    layers=[
+        pdk.Layer(
+            'ScatterplotLayer',
+            data=test_df,
+            get_position='[lon, lat]',
+            get_color='[255, 0, 0, 200]',
+            get_radius=100,
+        )
+    ]
+))
+
