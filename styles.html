@@ -10,8 +10,8 @@
     font-style: normal;
 }
 
-/* Полный сброс оформления Streamlit */
-html, body, .main, .block-container, .stApp, [class*="css"] {
+/* Базовая стилизация всей страницы */
+html, body, .main, .block-container, .stApp {
     background-color: #191A1A !important;
     color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
@@ -19,19 +19,13 @@ html, body, .main, .block-container, .stApp, [class*="css"] {
     border: none !important;
 }
 
-header, footer, .st-emotion-cache-18ni7ap {
+header, footer {
     background-color: #191A1A !important;
     color: #FFFFFF !important;
     border-bottom: none !important;
 }
 
-/* Курсор при наведении на карту */
-canvas:hover {
-    cursor: pointer !important;
-}
-
 /* Кнопка "double click" — цвет текста и фона */
-
 button[type="submit"] span {
     color: #191A1A !important;
 }
@@ -79,6 +73,7 @@ input[type=range]::-ms-thumb {
     padding: 10px;
     margin-bottom: 10px;
     transition: all 0.3s ease-in-out;
+    position: relative;
 }
 
 .card:hover {
@@ -89,13 +84,8 @@ input[type=range]::-ms-thumb {
 .card.selected {
     border: 3px solid #FF649A;
 }
-</style>
 
-<style>
-.card {
-    position: relative;
-}
-
+/* Всплывающее описание при наведении */
 .card .tooltip {
     visibility: hidden;
     background-color: #FFFFFF;
@@ -120,4 +110,3 @@ input[type=range]::-ms-thumb {
     opacity: 1;
 }
 </style>
-
