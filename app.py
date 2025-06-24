@@ -124,7 +124,7 @@ test_df = pd.DataFrame({'lat': [44.8185], 'lon': [20.4605]})
 
 st.pydeck_chart(pdk.Deck(
     map_style='mapbox://styles/mapbox/light-v10',
-    api_keys={"mapbox": "pk.eyJ1Ijoi...вставь_сюда_твой_токен"},
+    api_keys={"mapbox": "pk.eyJ1IjoianVudWxseSIsImEiOiJjbHJnNnNvYzkwMzI3MnZxdmE3dXhzcjZoIn0.yQa3m4Nd0IPLeJJBsxfpww"},
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
