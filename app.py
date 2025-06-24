@@ -63,7 +63,7 @@ filtered_df["what_happend"] = filtered_df["what_happend"].fillna("")
 
 st.pydeck_chart(pdk.Deck(
     map_style='mapbox://styles/junully/cmcantpz1003901siati505do',
-    api_keys={"mapbox": "pk.eyJ1Ijoi...твой_токен"},
+    api_keys={"mapbox": "pk.eyJ1IjoianVudWxseSIsImEiOiJjbHJnNnNvYzkwMzI3MnZxdmE3dXhzcjZoIn0.yQa3m4Nd0IPLeJJBsxfpww"},
     initial_view_state=pdk.ViewState(
         latitude=44.8185,
         longitude=20.4605,
