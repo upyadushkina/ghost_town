@@ -4,7 +4,7 @@ import pydeck as pdk
 import os
 
 # Устанавливаем Mapbox Access Token
-os.environ["MAPBOX_ACCESS_TOKEN"] = "вставь_сюда_свой_mapbox_token"
+os.environ["MAPBOX_ACCESS_TOKEN"] = "pk.eyJ1IjoianVudWxseSIsImEiOiJjbHJnNnNvYzkwMzI3MnZxdmE3dXhzcjZoIn0.yQa3m4Nd0IPLeJJBsxfpww"
 
 # === Цветовая схема и параметры ===
 PAGE_BG_COLOR = "#191A1A"
