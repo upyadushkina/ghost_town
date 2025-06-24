@@ -116,7 +116,3 @@ for idx, row in filtered_df.iterrows():
 m_query = st.query_params.get("mosque")
 if m_query:
     st.session_state.selected_mosque = m_query
-
-
-st.write("🔍 Тест: карта работает или нет?")
-test_df = pd.DataFrame({'lat': [44.8185], 'lon': [20.4605]})
