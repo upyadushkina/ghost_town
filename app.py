@@ -96,7 +96,6 @@ st.pydeck_chart(pdk.Deck(
     }
 ))
 
-st.write("Количество точек на карте:", len(filtered_df)),
 st.image("text_block2.png", use_container_width=True)
 
 # Галерея карточек мечетей
@@ -121,23 +120,3 @@ if m_query:
 
 st.write("🔍 Тест: карта работает или нет?")
 test_df = pd.DataFrame({'lat': [44.8185], 'lon': [20.4605]})
-
-st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/light-v10',
-    api_keys={"mapbox": "pk.eyJ1IjoianVudWxseSIsImEiOiJjbHJnNnNvYzkwMzI3MnZxdmE3dXhzcjZoIn0.yQa3m4Nd0IPLeJJBsxfpww"},
-    initial_view_state=pdk.ViewState(
-        latitude=44.8185,
-        longitude=20.4605,
-        zoom=13.5,
-    ),
-    layers=[
-        pdk.Layer(
-            'ScatterplotLayer',
-            data=test_df,
-            get_position='[lon, lat]',
-            get_color='[255, 0, 0, 200]',
-            get_radius=100,
-        )
-    ]
-))
-
